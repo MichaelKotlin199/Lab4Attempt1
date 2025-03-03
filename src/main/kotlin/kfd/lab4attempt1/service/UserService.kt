@@ -26,11 +26,10 @@ class UserService(
         val user = User(username = username, password = encodedPassword)
         val savedUser = userRepository.save(user)
 
-        // Добавляем начальные валюты пользователю
-        val initialCurrencies = listOf(
-            UserCurrency(user = savedUser, currency = Currency.RUB, amount = MoneyRecord(0)),
-            UserCurrency(user = savedUser, currency = Currency.USD, amount = MoneyRecord(0))
-        )
+        val initialCurrencies = Currency.entries.map { currency ->
+            UserCurrency(user = savedUser, currency = currency, amount = MoneyRecord(0))
+        }
+
         userCurrencyRepository.saveAll(initialCurrencies)
 
         return savedUser

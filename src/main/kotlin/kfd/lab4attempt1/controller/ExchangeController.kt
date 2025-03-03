@@ -1,4 +1,3 @@
-// src/main/kotlin/kfd/lab4attempt1/controller/ExchangeController.kt
 package kfd.lab4attempt1.controller
 
 import kfd.lab4attempt1.enums.Currency
@@ -23,15 +22,16 @@ class ExchangeController(
         model: Model
     ): String {
         val user = userService.findByUsername(userDetails.username)
-            ?: return "redirect:/login" // Если пользователь не найден, перенаправляем на страницу входа
+            ?: return "redirect:/login"
 
-        val userCurrencies = currencyService.getUserCurrencies(user)
-        val serviceCurrencies = currencyService.getServiceCurrencies()
+        val userCurrencies = currencyService.getUserCurrencies(user).associateBy({ it.currency }, { it.amount })
+        val serviceCurrencies = currencyService.getServiceCurrencies().associateBy({ it.currency }, { it.amount })
+
         val exchangeRates = currencyService.getExchangeRates()
 
         model.addAttribute("userCurrencies", userCurrencies)
         model.addAttribute("serviceCurrencies", serviceCurrencies)
-        model.addAttribute("rates", exchangeRates) // Передаем курсы валют
+        model.addAttribute("rates", exchangeRates)
         model.addAttribute("currencyList", Currency.entries)
         return "exchange"
     }
@@ -44,8 +44,7 @@ class ExchangeController(
         @RequestParam amount: Double,
         model: Model
     ): String {
-        val user = userService.findByUsername(userDetails.username)
-            ?: return "redirect:/login" // Если пользователь не найден, перенаправляем на страницу входа
+        val user = userService.findByUsername(userDetails.username) ?: return "redirect:/login"
 
         return try {
             currencyService.exchangeCurrency(user, fromCurrency, toCurrency, amount)
@@ -65,7 +64,7 @@ class ExchangeController(
         model: Model
     ): String {
         val user = userService.findByUsername(userDetails.username)
-            ?: return "redirect:/login" // Если пользователь не найден, перенаправляем на страницу входа
+            ?: return "redirect:/login"
 
         return try {
             currencyService.addFunds(user, currency, amount)

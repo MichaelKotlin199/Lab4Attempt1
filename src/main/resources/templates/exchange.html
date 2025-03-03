@@ -13,22 +13,11 @@
     </tr>
     <tr th:each="currency : ${currencyList}">
         <td th:text="${currency}"></td>
-        <td>
-            <!-- Используем Thymeleaf для поиска баланса пользователя -->
-            <span th:if="${#lists.contains(userCurrencies, currency)}">
-                [[${userCurrencies[#lists.contains(userCurrencies, currency)][0].amount}]]
-            </span>
-            <span th:unless="${#lists.contains(userCurrencies, currency)}">0.00</span>
-        </td>
-        <td>
-            <!-- Используем Thymeleaf для поиска баланса сервиса -->
-            <span th:if="${#lists.contains(serviceCurrencies, currency)}">
-                [[${serviceCurrencies[#lists.contains(serviceCurrencies, currency)][0].amount}]]
-            </span>
-            <span th:unless="${#lists.contains(serviceCurrencies, currency)}">0.00</span>
-        </td>
+        <td th:text="${userCurrencies.get(currency)}"></td>
+        <td th:text="${serviceCurrencies.get(currency)}"></td>
     </tr>
 </table>
+
 
 <h1>Exchange Rates</h1>
 <table border="1">
@@ -39,21 +28,13 @@
     <tr th:each="fromCurrency : ${currencyList}">
         <td th:text="${fromCurrency}"></td>
         <td th:each="toCurrency : ${currencyList}">
-            <span th:if="${rates[fromCurrency]?.containsKey(toCurrency)}">
-                [[${rates[fromCurrency]?.get(toCurrency)}]]
+            <span th:with="rate=${rates.get(fromCurrency)?.get(toCurrency)}">
+                <span th:if="${rate != null}" th:text="${#numbers.formatDecimal(rate, 1, 4)}"></span>
+                <span th:unless="${rate != null}">-</span>
             </span>
-            <span th:unless="${rates[fromCurrency]?.containsKey(toCurrency)}">-</span>
         </td>
     </tr>
 </table>
-
-<!-- Отладочная информация -->
-<div>
-    <h2>Debug Info</h2>
-    <p>User Currencies: [[${userCurrencies}]]</p>
-    <p>Service Currencies: [[${serviceCurrencies}]]</p>
-    <p>Exchange Rates: [[${rates}]]</p>
-</div>
 
 <h1>Add Funds</h1>
 <form th:action="@{/addFunds}" method="post">

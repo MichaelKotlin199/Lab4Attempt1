@@ -1,4 +1,3 @@
-// src/main/kotlin/kfd/lab4attempt1/service/CurrencyService.kt
 package kfd.lab4attempt1.service
 
 import kfd.lab4attempt1.MoneyRecord
@@ -60,7 +59,7 @@ class CurrencyService(
             throw IllegalArgumentException("Insufficient funds")
         }
 
-        val convertedAmount = (totalAmount * rate * 100).toLong()
+        val convertedAmount = (totalAmount * rate).toLong()
 
         val serviceTo = serviceCurrencyRepo.findByCurrency(toCurrency)
             ?: throw IllegalStateException("Service currency error")

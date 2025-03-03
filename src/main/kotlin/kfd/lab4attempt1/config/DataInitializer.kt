@@ -1,4 +1,3 @@
-// src/main/kotlin/kfd/lab4attempt1/config/DataInitializer.kt
 package kfd.lab4attempt1.config
 
 import kfd.lab4attempt1.MoneyRecord

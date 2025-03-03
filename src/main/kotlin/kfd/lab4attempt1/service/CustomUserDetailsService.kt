@@ -14,8 +14,8 @@ class CustomUserDetailsService(private val userRepository: UserRepository) : Use
             ?: throw UsernameNotFoundException("Пользователь не найден: $username")
         return org.springframework.security.core.userdetails.User(
             user.username,
-            user.password, // Хешированный пароль
-            emptyList() // Роли пользователя
+            user.password,
+            emptyList()
         )
     }
 }

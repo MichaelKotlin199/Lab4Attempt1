@@ -24,7 +24,7 @@ class UserController(private val userService: UserService) {
         return try {
             val user = userService.registerUser(username, password)
             model.addAttribute("user", user)
-            "redirect:/home"
+            "redirect:/exchange"
         } catch (e: IllegalArgumentException) {
             model.addAttribute("error", e.message)
             "register"
@@ -34,10 +34,5 @@ class UserController(private val userService: UserService) {
     @GetMapping("/login")
     fun loginForm(): String {
         return "login"
-    }
-
-    @GetMapping("/home")
-    fun home(): String {
-        return "home"
     }
 }
