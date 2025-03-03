@@ -1,5 +1,6 @@
-package kfd.lab4attempt1
+package kfd.lab4attempt1.service
 
+import kfd.lab4attempt1.repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException

@@ -1,4 +1,4 @@
-package kfd.lab4attempt1
+package kfd.lab4attempt1.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -16,11 +16,13 @@ class SecurityConfig {
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .authorizeHttpRequests {
-                it.requestMatchers("/register", "/login").permitAll()
+                it.requestMatchers("/register", "/login", "/css/**").permitAll()
                 it.anyRequest().authenticated()
             }
             .formLogin {
-                it.defaultSuccessUrl("/home", true)
+                it.loginPage("/login") // Указываем страницу входа
+                    .defaultSuccessUrl("/exchange", true) // Перенаправление после успешного входа
+                    .permitAll()
             }
             .logout {
                 it.logoutSuccessUrl("/login")

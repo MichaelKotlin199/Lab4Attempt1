@@ -1,4 +1,4 @@
-package kfd.lab4attempt1
+package kfd.lab4attempt1.model
 
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue

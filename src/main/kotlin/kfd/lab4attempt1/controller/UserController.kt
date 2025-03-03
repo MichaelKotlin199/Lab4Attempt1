@@ -1,5 +1,6 @@
-package kfd.lab4attempt1
+package kfd.lab4attempt1.controller
 
+import kfd.lab4attempt1.service.UserService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
